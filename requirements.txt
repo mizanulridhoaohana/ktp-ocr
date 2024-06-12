@@ -1,7 +1,5 @@
 easyocr==1.7.1
 inference_sdk==0.12.0
 numpy==1.24.2
-Pillow==10.1.0
-Pillow==9.0.1
 Pillow==10.3.0
 streamlit==1.33.0
