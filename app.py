@@ -43,7 +43,8 @@ def process_image(uploaded_file, model_id):
 
         # Print or use OCR result as needed
         for result in ocr_results:
-            st.write(f"OCR {prediction.get('class', 'Unknown')}: {result[1]}")
+            normalized_text = result[1].upper()
+            st.write(f"OCR {prediction.get('class', 'Unknown')}: {normalized_text}")
 
     # Save the annotated image
     annotated_image_path = "ktp_annotated.png"
