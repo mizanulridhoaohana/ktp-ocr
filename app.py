@@ -8,18 +8,20 @@ import os
 # Initialize EasyOCR
 reader = easyocr.Reader(['id'])
 
-@st.cache_data
-def process_image(image_path, model_id):
+def process_image(uploaded_file, model_id):
     CLIENT = InferenceHTTPClient(
         api_url="https://detect.roboflow.com",
         api_key="KsbTGBigSIYOwk4226BL"
     )
 
+    # Convert uploaded file to Image object
+    image = Image.open(uploaded_file)
+
     # Perform inference
-    result = CLIENT.infer(image_path, model_id=model_id)
+    result = CLIENT.infer(image, model_id=model_id)
 
     # Load the original image
-    original_image = Image.open(image_path)
+    original_image = image
     annotated_image = original_image.copy()
     draw = ImageDraw.Draw(annotated_image)
 
@@ -58,8 +60,4 @@ if uploaded_file is not None:
     model_id = "ktp-object-detection/1"  # Adjust as needed
 
     if st.button("Process Image"):
-        with open("temp_image.png", "wb") as f:
-            f.write(uploaded_file.read())
-       
-        process_image("temp_image.png", model_id)
-        os.remove("temp_image.png")
+        process_image(uploaded_file, model_id)
